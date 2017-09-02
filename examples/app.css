@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.cube {
+  width: 100px;
+  height: 30px;
+  background: red;
+  font-size: 23px;
+  text-align: center;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+
+.lists {
+  width: 100px;
+  height: 100px;
+  background: blue;
+  float: left;
+  margin-right: 20px;
+}
+
+.subnav {
+  margin-bottom: 0;
+  background: yellow;
+}
+
+.nav-wrap {
+  float: left;
+  width: 100px;
+  margin: 20px 20px 0 0;
+  position: relative;
+}
+
+.sub-nav-wrap {
+  position: absolute;
+  top: 0;
+  left: 100px;
+}
+
+.videolist-wrap {
+  float: left;
+  width: 450px;
+  margin-top: 20px;
+}
+
+.cube.focusActive {
+  background: green;
+}

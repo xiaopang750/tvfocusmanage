@@ -9,13 +9,10 @@ const keyMap = {
 const defaultFunc = {
   active() {},
   unactive() {},
-  onEdge() {},
-  ok() {},
-  unok() {},
-  clearOnEdge() {}
+  onBeforeLeave() {}
 };
 
-const focusManage = {
+const focusManageLib = {
   cur: {
     ...defaultFunc
   },
@@ -23,8 +20,23 @@ const focusManage = {
     ...defaultFunc
   },
   cubs: {},
-  foIndexs: {}
+  foIndexs: {},
+  zIndex: 1
 };
+
+const zIndexChange = (type) => {
+  let nowIndex = focusManageLib.zIndex;
+  if (type === 'up') {
+    focusManageLib.zIndex = nowIndex + 1;
+  } else if (type === 'down') {
+    if (nowIndex === 1) return;
+    focusManageLib.zIndex = nowIndex - 1;
+  } else if (type && typeof type === 'number') {
+    focusManageLib.zIndex = type;
+  } else {
+    focusManageLib.zIndex = 1;
+  }
+}
 
 const getBoundingClientRect = (el) => {
   if (!el) {
@@ -66,10 +78,36 @@ const getWidgetRect = (el) => {
   return rect;
 };
 
+// 创建Focus组件的id
+const careteId = () => {
+  return Math.random() * 100000000000000000 + new Date().getTime();
+};
+
+// 方向转换
+// 0;0;0;0 => {top: 0, right: 0, down: 0, left: 0}
+const changeGoto = (foGoto) => {
+  let result = {};
+  if (foGoto) {
+    let gotos = foGoto.split(';');
+    let indexMap = {
+      0: 'up',
+      1: 'right',
+      2: 'down',
+      3: 'left'
+    };
+    gotos.forEach((goto, index) => {
+      let dir = indexMap[index];
+      result[dir] = goto;
+    });
+  }
+  return result;
+};
+
 const queryWidgetByShadowAlgorithm = (curWidget, widgetsRect, dir) => {
   let resultWidget = null;
-  if (curWidget.goto && curWidget.goto[dir] && focusManage.foIndexs[curWidget.goto[dir]]) {
-    resultWidget = focusManage.foIndexs[curWidget.goto[dir]];
+  if (curWidget.goto && curWidget.goto[dir] && focusManageLib.foIndexs[curWidget.goto[dir]]) {
+    // 指定方向的情况
+    resultWidget = focusManageLib.foIndexs[curWidget.goto[dir]];
   } else {
     let currentRect = curWidget.rect;
     let dis = Infinity;
@@ -84,6 +122,7 @@ const queryWidgetByShadowAlgorithm = (curWidget, widgetsRect, dir) => {
         continue;
       }
       let tempWidgetRect = tempInfo.rect;
+      let isInSameIndex = curWidget.foZindex === tempInfo.foZindex;
       if (dir === 'left' && tempWidgetRect.right < currentRect.right && tempWidgetRect.left < currentRect.left && tempWidgetRect.top < currentRect.bottom && tempWidgetRect.bottom > currentRect.top && currentRect.right - tempWidgetRect.right < dis) {
         resultWidget = tempInfo;
         dis = currentRect.right - tempWidgetRect.right;
@@ -177,7 +216,7 @@ const doSwitch = (curWidget, widgetsRect, dirName) => {
   if (!curWidget.rect) curWidget.rect = getWidgetRect();
   let newFocusChildWidget = null;
   newFocusChildWidget = queryWidgetByShadowAlgorithm(curWidget, widgetsRect, dirName);
-  if (!newFocusChildWidget) {
+  if (!newFocusChildWidget || focusManageLib.deji) {
     newFocusChildWidget = queryWidgetByAreaAlgorithm(curWidget, widgetsRect, dirName);
   }
   return newFocusChildWidget;
@@ -186,29 +225,36 @@ const doSwitch = (curWidget, widgetsRect, dirName) => {
 document.addEventListener('keydown', (e) => {
   let code = e.keyCode;
   let eventType = keyMap[code];
-  let cur = focusManage.cur;
   if (!eventType) return;
+  focusManageLib.cur.eventType = eventType;
+  focusManageLib.cur.onBeforeLeave(focusManageLib.cur);
   if (eventType !== 'ok') {
-    let newInfo = doSwitch(cur, focusManage.cubs, eventType);
+    let newInfo = doSwitch(focusManageLib.cur, focusManageLib.cubs[focusManageLib.zIndex], eventType);
     if (newInfo) {
       // 可以移动的情况
-      focusManage.cur = newInfo;
-      focusManage.last.unactive();
-      focusManage.cur.active();
-    } else if (focusManage.cur.element && !newInfo) {
-      focusManage.cur.onEdge(eventType);
-      focusManage.last.clearOnEdge();
+      focusManageLib.cur = newInfo;
+      // 这两个调用是为了使得className 变化
+      focusManageLib.last.unactive();
+      focusManageLib.cur.active();
+      if (focusManageLib.last.onLeave) {
+        focusManageLib.last.onLeave(focusManageLib.last);
+      }
+      focusManageLib.cur.onAcitve(focusManageLib.cur);
+    } else if (focusManageLib.cur.element && !newInfo) {
+      focusManageLib.cur.onEdge(focusManageLib.cur);
     }
   } else {
-    focusManage.cur.ok();
-    focusManage.last.unok();
+    focusManageLib.cur.onOk(focusManageLib.cur);
   }
-  focusManage.last = focusManage.cur;
+  focusManageLib.last = focusManageLib.cur;
 });
 
-window.focusManage = focusManage;
+window.focusManageLib = focusManageLib;
 
 export {
-  focusManage,
-  getWidgetRect
+  focusManageLib,
+  getWidgetRect,
+  careteId,
+  changeGoto,
+  zIndexChange
 };
