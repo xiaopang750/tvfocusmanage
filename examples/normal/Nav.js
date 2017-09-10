@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Focus, focusManageLib} from '../src';
-import Cube from './Cube';
+import {Focus, focusManageLib} from '../../src';
+import Cube from '../Cube';
 import SubNav from './SubNav';
 
 const {zIndexChange} = focusManageLib;

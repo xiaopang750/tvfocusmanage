@@ -14,7 +14,8 @@ class Focus extends Component {
       onBeforeLeave = () => {},
       foIndex,
       zIndex = 1,
-      foGoto
+      foGoto,
+      foWidgetBind = ''
     } = this.props;
     let goto = changeGoto(foGoto);
     let element = ReactDOM.findDOMNode(this);
@@ -38,12 +39,14 @@ class Focus extends Component {
       onEdge,
       onAcitve,
       onBeforeLeave,
-      onLeave
+      onLeave,
+      foWidgetBind
     };
     this.context.focusInfo.cubs[zIndex] = this.context.focusInfo.cubs[zIndex] || {};
     this.context.focusInfo.cubs[zIndex][id] = cubInfo;
     if (foIndex) this.context.focusInfo.foIndexs[foIndex] = cubInfo;
     element.dataset.focusId = id;
+    element.dataset.focusIndex = zIndex;
   }
   componentWillUnmount() {
     delete this.context.focusInfo.cubs[this.zIndex][this.id];

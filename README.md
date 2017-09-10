@@ -6,9 +6,27 @@ tvfocusmanage
 
 一个tv端的 react 焦点框架
 
-[先看一个例子](http://newcdn.tvall.cn/20170902232915/focus.html)
+先看两个例子
+
+[normal组件](http://newcdn.tvall.cn/video/20170910212823/index.html)
+
+[scroll组件](http://newcdn.tvall.cn/video/20170910212823/index2.html)
 
 用键盘方向键和回车键操作
+
+第一个是tv端常用的业务逻辑左侧是菜单，右侧是展示列表。
+
+第二个也是tv端常用的滚动组件。
+
+
+# 开始
+
+1. git clone https://github.com/xiaopang750/tvfocusmanage.git
+2. cd tvfocusmanage
+3. npm install -d
+4. npm run dev
+5. open the browser look at http://localhost:9000/ and http://localhost:9000/index2.html
+
 
 # 怎么使用
 
@@ -172,6 +190,70 @@ FocusManage 提供一个 zIndexChange的方法
 
 所以在第一层级的 焦点元素都不能被聚焦
 
+[例子](http://newcdn.tvall.cn/video/20170910212823/index.html)
+
+
+## 关于scroll组件
+
+tv 端经常需要在指定区可视区域内滚动
+
+这个焦点库提供了一个简单的封装
+
+纵向滚动不需要计算实际高度,因为元素没有float, 组件可以自动计算出实际高度
+
+横向滚动需要自己计算实际宽度,因为元素可能float了,宽度需要预先靠开发者
+
+设定才不会导致元素被挤下去,组件才能自动计算实际宽度。
+
+```
+<FocusScroll
+  data-dir="v"
+>
+  <div className="scroll-nav-v">
+    <Focus>
+      <div>1</div>
+    </Focus>
+    <Focus>
+      <div>2</div>
+    </Focus>
+    <Focus>
+      <div>3</div>
+    </Focus>
+  </div>
+</FocusScroll>
+
+只需要在原来基础上套一层 FocusScroll组件 表示被包裹的元素需要在可视区内滚动
+
+.scroll-nav-v {
+  height: 300px;
+}
+
+不需要加其他样式 比如: overflow:hidden
+
+如果是横向:
+<FocusScroll
+  data-dir="h"
+>
+  <div className="scroll-nav-h">
+    <Focus>
+      <div>1</div>
+    </Focus>
+    <Focus>
+      <div>2</div>
+    </Focus>
+    <Focus>
+      <div>3</div>
+    </Focus>
+  </div>
+</FocusScroll>
+
+只需要改一下 data-dir的方向即可
+
+.scroll-nav-h 的实际宽度一般情况下需要js来计算
+```
+
+[例子](http://newcdn.tvall.cn/video/20170910212823/index2.html)
+
 
 # 工作原理
 
@@ -244,23 +326,11 @@ cubs 是一个对象 里面存了 很多 Focus组件的信息 因为是hash解�
 2. 组件mount的同时生成位置信息存储到内存中，所以所有的算法都是基于内存的计算，不需要每次都获取dom。
 3. 遵循react的数据流驱动原则，没有破坏子组件或者父组件的结构。
 
-# 例子
-
-code 见examples目录
-
-[例子](http://newcdn.tvall.cn/20170902232915/focus.html)
-
-1. git clone https://github.com/xiaopang750/tvfocusmanage.git
-2. cd tvfocusmanage
-3. npm install -d
-4. npm run dev
-5. open the browser look at http://localhost:9000/
-
 
 # TODO
 
-1. 增加电视端常用的scroll组件
-2. 添加弹框组件
-3. 添加update方法更新内存中的位置信息
-4. 添加最佳实践的说明
-5. 添加eslint
+1. 添加update方法更新内存中的位置信息
+2. 添加最佳实践的说明
+3. 添加eslint
+4. 解决scroll组件动态加载数据的bug
+5. Focus组件去除ReactDOM.findDOMNode方法

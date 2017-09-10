@@ -12,6 +12,15 @@ const defaultFunc = {
   onBeforeLeave() {}
 };
 
+const findWidgets = (element, cb) => {
+  let parent = element.parentNode;
+  if (!parent) return;
+  if (parent.dataset && parent.dataset.focusScrollId) {
+    if (cb) cb(parent.dataset.focusScrollId);
+  }
+  findWidgets(parent, cb);
+};
+
 const focusManageLib = {
   cur: {
     ...defaultFunc
@@ -21,7 +30,8 @@ const focusManageLib = {
   },
   cubs: {},
   foIndexs: {},
-  zIndex: 1
+  zIndex: 1,
+  widgets: {}
 };
 
 const zIndexChange = (type) => {
@@ -39,8 +49,12 @@ const zIndexChange = (type) => {
 }
 
 const getBoundingClientRect = (el) => {
+  // TODO: 原生js 实现的getBoundingClientRect 没有解决滚动条的问题
   if (!el) {
     return {};
+  }
+  if (el.getBoundingClientRect) {
+    return el.getBoundingClientRect();
   }
   let result = {
     left: 0,
@@ -62,20 +76,32 @@ const getBoundingClientRect = (el) => {
   return result;
 };
 
-const getWidgetRect = (el) => {
+const getWidgetRect = (el, offset = {top: 0, left: 0}) => {
   let rect;
   let elRect = getBoundingClientRect(el);
+  let top = (elRect.top || 0) + offset.top;
+  let bottom = (elRect.bottom || 0) + offset.top;
+  let right = (elRect.right || 0) + offset.left;
+  let left = (elRect.left || 0) + offset.left;
   rect = {
-    top: elRect.top || 0,
-    bottom: elRect.bottom || 0,
-    right: elRect.right || 0,
-    left: elRect.left || 0,
+    top,
+    bottom,
+    right,
+    left,
     width: elRect.width || 0,
     height: elRect.height || 0,
-    centerX: (elRect.width / 2 + elRect.left) || 0,
-    centerY: (elRect.height / 2 + elRect.top) || 0
+    centerX: (elRect.width / 2 + left) || 0,
+    centerY: (elRect.height / 2 + top) || 0
   };
   return rect;
+};
+
+const refreshLocInfo = (els) => {
+  els.forEach((el) => {
+    let id = el.getAttribute('data-focus-id');
+    let zIndex = el.getAttribute('data-focus-index');
+    focusManageLib.cubs[zIndex][id].rect = getWidgetRect(el);
+  })
 };
 
 // 创建Focus组件的id
@@ -216,7 +242,7 @@ const doSwitch = (curWidget, widgetsRect, dirName) => {
   if (!curWidget.rect) curWidget.rect = getWidgetRect();
   let newFocusChildWidget = null;
   newFocusChildWidget = queryWidgetByShadowAlgorithm(curWidget, widgetsRect, dirName);
-  if (!newFocusChildWidget || focusManageLib.deji) {
+  if (!newFocusChildWidget) {
     newFocusChildWidget = queryWidgetByAreaAlgorithm(curWidget, widgetsRect, dirName);
   }
   return newFocusChildWidget;
@@ -232,6 +258,7 @@ document.addEventListener('keydown', (e) => {
     let newInfo = doSwitch(focusManageLib.cur, focusManageLib.cubs[focusManageLib.zIndex], eventType);
     if (newInfo) {
       // 可以移动的情况
+      newInfo.eventType = eventType;
       focusManageLib.cur = newInfo;
       // 这两个调用是为了使得className 变化
       focusManageLib.last.unactive();
@@ -246,6 +273,12 @@ document.addEventListener('keydown', (e) => {
   } else {
     focusManageLib.cur.onOk(focusManageLib.cur);
   }
+  findWidgets(focusManageLib.cur.element, (widgetId) => {
+    let paretWidget = focusManageLib.widgets[widgetId];
+    if (paretWidget) {
+      paretWidget.action(focusManageLib.cur);
+    }
+  });
   focusManageLib.last = focusManageLib.cur;
 });
 
@@ -256,5 +289,6 @@ export {
   getWidgetRect,
   careteId,
   changeGoto,
-  zIndexChange
+  zIndexChange,
+  refreshLocInfo
 };

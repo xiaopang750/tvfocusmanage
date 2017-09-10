@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import App from './app';
-import {FocusManage} from '../src';
+import {FocusManage} from '../../src';
 
 render(
   <FocusManage>

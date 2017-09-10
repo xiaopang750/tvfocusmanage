@@ -1,6 +1,6 @@
 import React from 'react';
-import {Focus} from '../src';
-import Cube from './Cube';
+import {Focus} from '../../src';
+import Cube from '../Cube';
 
 const data = [
   {type: 'lists', name: '1'},
