@@ -336,6 +336,19 @@ cubs 是一个对象 里面存了 很多 Focus组件的信息 因为是hash解�
 
 调用其他方法跟调用active方法同理
 
+# inspired by
+[阿里webos开发文档](http://developer.tv.yunos.com/example/demo/ui-example.html#开发演示-0)
+
+阿里写的焦点框架不是基于react的，需要理解记忆的api较多，这里只是抽取了计算被focus元素的两个算法平面区域算法
+
+和阴影算法。
+
+[阿里tv端实践](http://www.imooc.com/learn/590)
+
+其中的第六章: 第6章 TV前端开发解决方案——by 听鸿
+
+主要讲了上面提到的算法的简单实现原理。
+
 #  优点
 
 1. API LESS。
@@ -347,6 +360,5 @@ cubs 是一个对象 里面存了 很多 Focus组件的信息 因为是hash解�
 
 1. 添加update方法更新内存中的位置信息
 2. 添加最佳实践的说明
-3. 添加eslint
-4. 解决scroll组件动态加载数据的bug
-5. Focus组件去除ReactDOM.findDOMNode方法
+3. 解决scroll组件动态加载数据的bug
+4. Focus组件去除ReactDOM.findDOMNode方法
