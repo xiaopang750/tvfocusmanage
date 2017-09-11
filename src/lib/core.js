@@ -46,7 +46,7 @@ const zIndexChange = (type) => {
   } else {
     focusManageLib.zIndex = 1;
   }
-}
+};
 
 const getBoundingClientRect = (el) => {
   // TODO: 原生js 实现的getBoundingClientRect 没有解决滚动条的问题
@@ -101,13 +101,11 @@ const refreshLocInfo = (els) => {
     let id = el.getAttribute('data-focus-id');
     let zIndex = el.getAttribute('data-focus-index');
     focusManageLib.cubs[zIndex][id].rect = getWidgetRect(el);
-  })
+  });
 };
 
 // 创建Focus组件的id
-const careteId = () => {
-  return Math.random() * 100000000000000000 + new Date().getTime();
-};
+const careteId = () => Math.random() * 100000000000000000 + new Date().getTime();
 
 // 方向转换
 // 0;0;0;0 => {top: 0, right: 0, down: 0, left: 0}
@@ -148,7 +146,6 @@ const queryWidgetByShadowAlgorithm = (curWidget, widgetsRect, dir) => {
         continue;
       }
       let tempWidgetRect = tempInfo.rect;
-      let isInSameIndex = curWidget.foZindex === tempInfo.foZindex;
       if (dir === 'left' && tempWidgetRect.right < currentRect.right && tempWidgetRect.left < currentRect.left && tempWidgetRect.top < currentRect.bottom && tempWidgetRect.bottom > currentRect.top && currentRect.right - tempWidgetRect.right < dis) {
         resultWidget = tempInfo;
         dis = currentRect.right - tempWidgetRect.right;

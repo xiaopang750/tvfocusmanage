@@ -1,6 +1,3 @@
-let webpack = require('webpack');
-let path = require('path');
-
 let rootDir = __dirname;
 
 let webpackConfig = {

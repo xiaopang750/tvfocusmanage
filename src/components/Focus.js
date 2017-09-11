@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import classnames from 'classnames';
 import ReactDOM from 'react-dom';
 import {getWidgetRect, careteId, changeGoto} from '../lib/core';
-import classnames from 'classnames';
 
 class Focus extends Component {
   constructor(props) {
@@ -66,7 +66,7 @@ class Focus extends Component {
     };
     let child = this.props.children;
     let {type} = child;
-    let {recivePropsName = this.recivePropsName, activeClassName = this.activeClassName} = this.props;
+    let {recivePropsName = this.recivePropsName} = this.props;
     let childClass = child.props.className;
     if (typeof type !== 'function') {
       let focusClass = classnames({

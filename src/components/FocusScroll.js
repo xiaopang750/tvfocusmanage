@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import classnames from 'classnames';
 import {focusManageLib, careteId, getWidgetRect, refreshLocInfo} from '../lib/core';
 
 const outerStyle = {
@@ -11,16 +10,13 @@ const outerStyle = {
 const innerStyle = {
   boxSizing: 'border-box',
   position: 'relative'
-}
+};
 
 class FocusScroll extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.dixX = 0;
     this.disY = 0;
-  }
-  calcHeight(ele) {
-    return ele.offsetHeight;
   }
   componentDidMount() {
     let id = careteId();
@@ -87,10 +83,10 @@ class FocusScroll extends Component {
       this.oInner = oInner;
     };
     return (
-        <div {...outerProps}>
-          {React.cloneElement(React.Children.only(this.props.children), innerProps)}
-        </div>
-    )
+      <div {...outerProps}>
+        {React.cloneElement(React.Children.only(this.props.children), innerProps)}
+      </div>
+    );
   }
 }
 

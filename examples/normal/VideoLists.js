@@ -16,14 +16,14 @@ const data = [
 
 const onOk = (e) => {
   alert(`我被点击了我是:${e.element.innerHTML}`);
-}
+};
 
 const onEdge = (e) => {
   let {eventType} = e;
   if (eventType === 'up' || eventType === 'down') {
     alert(`当前方向:${eventType} 我到边界了可以执行翻页加载了新数据了`);
   }
-}
+};
 
 const VideoLists = () => {
   return (
@@ -38,11 +38,11 @@ const VideoLists = () => {
             >
               <Cube type={type} name={name} />
             </Focus>
-          )
+          );
         })
       }
     </div>
-  )
+  );
 };
 
 export default VideoLists;

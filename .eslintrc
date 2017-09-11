@@ -1,0 +1,67 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint-config-airbnb"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "mongo": true,
+    "mocha": true
+  },
+  "plugins": [
+    "react",
+  ],
+  "globals": {
+    pageInfo: true
+    //添加项目所需没有申明的全局变量
+  },
+  "rules": {
+    "array-callback-return": 0,
+    "prefer-const": 0,
+    "no-console": 0,
+    "no-param-reassign": 0,
+    "comma-dangle": 0,
+    "object-curly-spacing": 0,
+    "no-underscore-dangle": 0,
+    "global-require": 0,
+    "no-unused-expressions": 0,
+    "import/prefer-default-export": 0,
+    "import/no-dynamic-require": 0,
+    "import/no-mutable-exports": 0,
+    "import/extensions": 0,
+    "import/no-unresolved": 0,
+    "no-mixed-operators": 0,
+    "no-lonely-if": 0,
+    "no-else-return": 0,
+    "no-return-assign": 0,
+    "import/no-named-as-default": 1,
+    // "max-len": [1, 100, {"ignoreTemplateLiterals": true, "ignoreRegExpLiterals": true}],
+    "max-len": 0,
+    "no-prototype-builtins": 2,
+    "no-restricted-syntax": 1,
+    "import/imports-first": 2,
+    "func-names": 2,
+    "prefer-arrow-callback": 2,
+    "no-unused-vars": [2, {"args": "none"}],
+    "camelcase": 2,
+    "import/newline-after-import": 2,
+    "import/no-extraneous-dependencies": 0,
+    "no-static-element-interactions": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "guard-for-in": 0,
+    "no-continue": 0,
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "react/no-find-dom-node": 0,
+    "arrow-body-style": 1
+  }
+}

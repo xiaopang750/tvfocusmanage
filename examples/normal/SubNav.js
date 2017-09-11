@@ -45,7 +45,7 @@ class SubNav extends Component {
                   >
                     <Cube type={type} name={name} />
                   </Focus>
-                )
+                );
               })
             }
           </div>

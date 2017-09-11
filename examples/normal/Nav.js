@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Focus, focusManageLib} from '../../src';
-import Cube from '../Cube';
 import SubNav from './SubNav';
 
 const {zIndexChange} = focusManageLib;
@@ -19,29 +18,30 @@ class Nav extends Component {
     this.showOrHideSubNav = this.showOrHideSubNav.bind(this);
     this.onBeforeLeave = this.onBeforeLeave.bind(this);
   }
-  showOrHideSubNav() {
-    this.setState({
-      show: !this.state.show
-    });
-  }
   onBeforeLeave(e) {
     if (e.eventType === 'right' && this.state.show === true) {
       zIndexChange('up');
     }
   }
-  render () {
+  showOrHideSubNav() {
+    this.setState({
+      show: !this.state.show
+    });
+  }
+  render() {
     return (
       <div className="nav-wrap">
         {
           data.map(({type, name}) => {
             return (
-              <Focus key={name}
+              <Focus
+                key={name}
                 onOk={this.showOrHideSubNav}
                 onBeforeLeave={this.onBeforeLeave}
               >
                 <div className="cube">1</div>
               </Focus>
-            )
+            );
           })
         }
         <SubNav

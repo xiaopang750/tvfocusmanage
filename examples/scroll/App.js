@@ -38,7 +38,7 @@ const App = () => {
                   >
                     <Cube type={type} name={name} />
                   </Focus>
-                )
+                );
               })
             }
           </div>
@@ -54,7 +54,7 @@ const App = () => {
                   >
                     <Cube type={type} name={name} />
                   </Focus>
-                )
+                );
               })
             }
           </div>
@@ -64,14 +64,14 @@ const App = () => {
             <div className="scroll-nav-v">
               {
                 data.map((item, index) => {
-                  let {type, name} = item;
+                  let {name} = item;
                   return (
                     <Focus
                       key={index}
                     >
                       <Cube name={name} />
                     </Focus>
-                  )
+                  );
                 })
               }
             </div>
@@ -80,14 +80,14 @@ const App = () => {
             <div className="scroll-nav-v">
               {
                 data.map((item, index) => {
-                  let {type, name} = item;
+                  let {name} = item;
                   return (
                     <Focus
                       key={index}
                     >
                       <Cube name={name} />
                     </Focus>
-                  )
+                  );
                 })
               }
             </div>
@@ -109,7 +109,7 @@ const App = () => {
         </div>
       </div>
     </FocusScroll>
-  )
+  );
 };
 
 export default App;

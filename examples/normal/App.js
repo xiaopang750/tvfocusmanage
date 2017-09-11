@@ -9,7 +9,7 @@ const App = () => {
       <Nav />
       <VideoLists />
     </div>
-  )
+  );
 };
 
 export default App;

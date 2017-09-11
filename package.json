@@ -5,8 +5,12 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack.config.dev.js",
-    "build": "./node_modules/.bin/webpack --config ./webpack.config.prod.js"
+    "build": "./node_modules/.bin/webpack --config ./webpack.config.prod.js",
+    "lint": "./node_modules/.bin/eslint ."
   },
+  "pre-commit": [
+    "lint"
+  ],
   "keywords": [
     "tv",
     "react",
@@ -20,7 +24,13 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.7",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.6.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.5.0",
     "file-loader": "^0.11.2",
+    "pre-commit": "^1.2.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "style-loader": "^0.18.2",
