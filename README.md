@@ -99,7 +99,17 @@ Focus的子元素也可以是普通div 例如:
 
 这里的 focusActive 是 FocusMange通过setSate传过来的props
 
-这里不用担心性能问题，因为只触发了当前组件和前一个组件的setState
+这里不用担心性能问题，因为只触发了
+
+当前组件、前一个组件、前前一个组件的setSate
+
+所以也分为了三种状态:
+
+当前元素 focusActive <div class="foo focusActive"></div>
+
+上一个元素 cached <div class="foo cached"></div>
+
+上上一个元素 清空样式 <div class="foo"></div>
 
 ## 当然为了避免和父级传来的props冲突,这些接收的props名称可以自己定义:
 

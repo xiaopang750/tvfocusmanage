@@ -59,6 +59,10 @@ html,body {
   background: green;
 }
 
+.cube.cached {
+  background: yellow;
+}
+
 .scroll-nav {
   /*width: 1680px;*/
 }

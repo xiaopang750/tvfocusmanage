@@ -9,6 +9,7 @@ const keyMap = {
 const defaultFunc = {
   active() {},
   unactive() {},
+  clear() {},
   onBeforeLeave() {}
 };
 
@@ -26,6 +27,9 @@ const focusManageLib = {
     ...defaultFunc
   },
   last: {
+    ...defaultFunc
+  },
+  prevLast: {
     ...defaultFunc
   },
   cubs: {},
@@ -97,11 +101,12 @@ const getWidgetRect = (el, offset = {top: 0, left: 0}) => {
 };
 
 const refreshLocInfo = (els) => {
-  els.forEach((el) => {
+  for (let i = 0; i < els.length; i += 1) {
+    let el = els[i];
     let id = el.getAttribute('data-focus-id');
     let zIndex = el.getAttribute('data-focus-index');
     focusManageLib.cubs[zIndex][id].rect = getWidgetRect(el);
-  });
+  }
 };
 
 // 创建Focus组件的id
@@ -258,11 +263,13 @@ document.addEventListener('keydown', (e) => {
       newInfo.eventType = eventType;
       focusManageLib.cur = newInfo;
       // 这两个调用是为了使得className 变化
+      focusManageLib.prevLast.clear();
       focusManageLib.last.unactive();
       focusManageLib.cur.active();
       if (focusManageLib.last.onLeave) {
         focusManageLib.last.onLeave(focusManageLib.last);
       }
+      focusManageLib.prevLast = focusManageLib.last;
       focusManageLib.cur.onAcitve(focusManageLib.cur);
     } else if (focusManageLib.cur.element && !newInfo) {
       focusManageLib.cur.onEdge(focusManageLib.cur);

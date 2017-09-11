@@ -7,12 +7,14 @@ class Focus extends Component {
   constructor(props) {
     super(props);
     this.recivePropsName = 'focusActive';
+    this.cachePropsName = 'cached';
     this.activeClassName = 'focusActive';
   }
   componentDidMount() {
     let {
       recivePropsName = this.recivePropsName,
       activeClassName = this.activeClassName,
+      cachePropsName = this.cachePropsName,
       onOk = () => {},
       onAcitve = () => {},
       onLeave = () => {},
@@ -39,6 +41,9 @@ class Focus extends Component {
         this.setState({[recivePropsName]: activeClassName});
       },
       unactive: () => {
+        this.setState({[recivePropsName]: cachePropsName});
+      },
+      clear: () => {
         this.setState({[recivePropsName]: ''});
       },
       onOk,
