@@ -48,3 +48,6 @@
 .cube.focusActive {
   background: green;
 }
+.cube.cached {
+  background: yellow;
+}

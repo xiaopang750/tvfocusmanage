@@ -71,12 +71,13 @@ class Focus extends Component {
     };
     let child = this.props.children;
     let {type} = child;
-    let {recivePropsName = this.recivePropsName} = this.props;
+    let {recivePropsName = this.recivePropsName, cachePropsName = this.cachePropsName} = this.props;
     let childClass = child.props.className;
     if (typeof type !== 'function') {
       let focusClass = classnames({
         [childClass]: childClass,
-        [recivePropsName]: props[recivePropsName]
+        [recivePropsName]: this.activeClassName === props[recivePropsName],
+        [cachePropsName]: this.cachePropsName === props[recivePropsName]
       });
       props.className = focusClass;
       delete props[recivePropsName];
