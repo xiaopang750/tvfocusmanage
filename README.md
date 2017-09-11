@@ -8,9 +8,9 @@ tvfocusmanage
 
 先看两个例子
 
-[normal组件](http://newcdn.tvall.cn/video/20170910212823/index.html)
+[normal组件](http://119.254.101.32:7788/index.html)
 
-[scroll组件](http://newcdn.tvall.cn/video/20170910212823/index2.html)
+[scroll组件](http://119.254.101.32:7788/index2.html)
 
 用键盘方向键和回车键操作
 
@@ -79,6 +79,22 @@ const SomeComponent = ({focusActive}) => {
     <div className={`item ${focusActive}`}>hello world</div>
   )
 }
+
+Focus的子元素也可以是普通div 例如:
+<Focus>
+  <div className="foo">222</div>
+</Focus>
+
+当div被focus的时候className 会变成 "foo focusActive"
+
+所有的focus元素不会额外的包裹任何元素
+
+<Focus>
+  <div className="foo">222</div>
+</Focus>
+
+最后渲染表现为:
+<div className="foo">222</div>
 ```
 
 这里的 focusActive 是 FocusMange通过setSate传过来的props
@@ -190,7 +206,7 @@ FocusManage 提供一个 zIndexChange的方法
 
 所以在第一层级的 焦点元素都不能被聚焦
 
-[例子](http://newcdn.tvall.cn/video/20170910212823/index.html)
+[例子](http://119.254.101.32:7788/index.html)
 
 
 ## 关于scroll组件
@@ -252,7 +268,7 @@ tv 端经常需要在指定区可视区域内滚动
 .scroll-nav-h 的实际宽度一般情况下需要js来计算
 ```
 
-[例子](http://newcdn.tvall.cn/video/20170910212823/index2.html)
+[例子](http://119.254.101.32:7788/index2.html)
 
 
 # 工作原理

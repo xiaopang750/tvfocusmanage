@@ -1,3 +1,5 @@
 node_modules
 static.sh
 public.log
+npm-debug.log
+.DS_Store

@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {getWidgetRect, careteId, changeGoto} from '../lib/core';
+import classnames from 'classnames';
 
 class Focus extends Component {
+  constructor(props) {
+    super(props);
+    this.recivePropsName = 'focusActive';
+    this.activeClassName = 'focusActive';
+  }
   componentDidMount() {
     let {
-      recivePropsName = 'focusActive',
-      activeClassName = 'focusActive',
+      recivePropsName = this.recivePropsName,
+      activeClassName = this.activeClassName,
       onOk = () => {},
       onAcitve = () => {},
       onLeave = () => {},
@@ -56,10 +62,21 @@ class Focus extends Component {
   }
   render() {
     let props = {
-      ...this.props,
       ...this.state
     };
-    return React.cloneElement(React.Children.only(this.props.children), props);
+    let child = this.props.children;
+    let {type} = child;
+    let {recivePropsName = this.recivePropsName, activeClassName = this.activeClassName} = this.props;
+    let childClass = child.props.className;
+    if (typeof type !== 'function') {
+      let focusClass = classnames({
+        [childClass]: childClass,
+        [recivePropsName]: props[recivePropsName]
+      });
+      props.className = focusClass;
+      delete props[recivePropsName];
+    }
+    return React.cloneElement(React.Children.only(child), props);
   }
 }
 

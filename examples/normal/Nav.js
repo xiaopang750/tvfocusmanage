@@ -39,7 +39,7 @@ class Nav extends Component {
                 onOk={this.showOrHideSubNav}
                 onBeforeLeave={this.onBeforeLeave}
               >
-                <Cube type={type} name={name} />
+                <div className="cube">1</div>
               </Focus>
             )
           })
